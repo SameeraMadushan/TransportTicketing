@@ -1,15 +1,28 @@
-<div class="main-container">
-    <div class="content-container">
-        <div class="content-area">
-            <router-outlet></router-outlet>
-        </div>
-        <clr-vertical-nav>
-            <a clrVerticalNavLink routerLink="./home" routerLinkActive="active">Home</a>
-            <a clrVerticalNavLink routerLink="" routerLinkActive="active">Statistics</a>
-            <a clrVerticalNavLink routerLink="" routerLinkActive="active">History</a>
-            <a clrVerticalNavLink routerLink="" routerLinkActive="active">Vehicles</a>
-            <a clrVerticalNavLink routerLink="" routerLinkActive="active">Users</a>
-            <a clrVerticalNavLink routerLink="" routerLinkActive="active">Settings</a>
-        </clr-vertical-nav>
-    </div>
+<div class="main-container" style="float:left;">
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed">
+        <a clrVerticalNavLink routerLink="./home" routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="home"></clr-icon>
+            HOME
+        </a>
+        <a clrVerticalNavLink routerLink="./d" routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="bolt"></clr-icon>
+            Electric
+        </a>
+        <a clrVerticalNavLink routerLink="./s" routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="sad-face"></clr-icon>
+            Poison
+        </a>
+        <a clrVerticalNavLink routerLink="./a" routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="bug"></clr-icon>
+            Grass
+        </a>
+        <a clrVerticalNavLink routerLink="./q" routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="shield"></clr-icon>
+            Fighting
+        </a>
+        <a clrVerticalNavLink routerLink="./w" routerLinkActive="active">
+            <clr-icon clrVerticalNavIcon shape="certificate"></clr-icon>
+            Credit
+        </a>
+    </clr-vertical-nav>
 </div>

@@ -9,13 +9,21 @@ import { SwapcardComponent } from './pages/swapcard/swapcard.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TopupComponent } from './pages/topup/topup.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
-import { HomeComponent } from './pages/dashboardcontent/home/home.component';
+
+import { HomeModule } from './pages/dashboardcontent';
 
 const appRoutes: Routes = [
   { path: 'swapcard', component: SwapcardComponent },
   { path: 'topup', component: TopupComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'dashboard/home', component: HomeComponent },
+  { path: 'dashboard', component: DashboardComponent,
+  children: [
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    {
+      path: 'home',
+      loadChildren: './pages/dashboardcontent/home/home.module#HomeModule'
+    }
+  ]
+  }
 ];
 
 @NgModule({
@@ -25,8 +33,7 @@ const appRoutes: Routes = [
     SwapcardComponent,
     DashboardComponent,
     TopupComponent,
-    NavigationComponent,
-    HomeComponent
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
