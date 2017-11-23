@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-swapcard',
@@ -11,5 +12,14 @@ export class SwapcardComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  card = '';
+  onClick(){
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Have a Safe Journey! '+this.card,
+      showConfirmButton: false,
+      timer: 2000
+    })
+  }
 }
