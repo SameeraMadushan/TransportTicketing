@@ -13,7 +13,7 @@ export class TopupComponent implements OnInit {
   ngOnInit() {
   }
   card = '';
-  loggedIn: boolean = false;
+  loggedIn = 'yes';
   onClick() {
     swal.setDefaults({
       input: 'password',
@@ -33,8 +33,9 @@ export class TopupComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
+        console.log('CALLED');
+        this.loggedIn = 'No';
         console.log(this.loggedIn);
-        this.loggedIn = true;
       }
       else if(result.value != '123' && result.value != undefined){
         swal({
