@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClarityModule } from "clarity-angular";
 import { HttpModule } from '@angular/http'
+import { ChartsModule } from 'ng2-charts';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
+    ChartsModule,
     RouterModule.forRoot(
       appRoutes,
       { useHash: true }
