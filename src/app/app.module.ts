@@ -20,6 +20,7 @@ import { PassengersComponent } from './pages/dashboardcontent/passengers/passeng
 import { StaffComponent } from './pages/dashboardcontent/staff/staff.component';
 import { BussesComponent } from './pages/dashboardcontent/busses/busses.component';
 import { StatisticsComponent } from './pages/dashboardcontent/statistics/statistics.component';
+import { ViewBalanceComponent } from './pages/topup/view-balance/view-balance.component';
 
 const appRoutes: Routes = [
   { path: 'swapcard', component: SwapcardComponent },
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
   { path: 'selectTransaction', component: SelectTransactionComponent },
   { path: 'paymentMethod', component: PaymentMethodsComponent },
   { path: 'creditbyCard', component: AddCreditByCardComponent },
-  { path: 'creditbyCash', component: AddCreditByCashComponent }
+  { path: 'creditbyCash', component: AddCreditByCashComponent },
+  { path: 'accBalance', component: ViewBalanceComponent }
 ];
 
 @NgModule({
@@ -53,7 +55,8 @@ const appRoutes: Routes = [
     PassengersComponent,
     StaffComponent,
     BussesComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    ViewBalanceComponent
   ],
   imports: [
     BrowserModule,

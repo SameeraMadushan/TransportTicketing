@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Http } from '@angular/http';
+import { get } from 'selenium-webdriver/http';
 import swal from 'sweetalert2';
 
 @Component({
@@ -9,23 +11,43 @@ import swal from 'sweetalert2';
 })
 export class SelectTransactionComponent implements OnInit {
 
-  constructor( private router : Router) { }
+  constructor(private router: Router, private http: Http) { }
 
   ngOnInit() {
-    if(window.localStorage.getItem("continue") == "null" || window.localStorage.getItem("continue") == undefined){
-      window.localStorage.setItem("session",null);
-      window.localStorage.setItem("continue","login");
+    if (window.localStorage.getItem("continue") == "null" || window.localStorage.getItem("continue") == undefined) {
+      window.localStorage.setItem("session", null);
+      window.localStorage.setItem("continue", "login");
       this.sweetAlert();
       this.router.navigate(['/topup']);
     }
   }
-  addCredit(){
+  baseUrl = 'http://192.168.1.100:4000/api/';
+  jsonResults: any;
+  accBalance = '';
+
+  get(method) {
+    this.http.get(this.baseUrl + method).subscribe(data => {
+      // Read the result field from the JSON response.
+      this.jsonResults = data.json();
+    });
+  }
+
+  addCredit() {
     this.router.navigate(['/paymentMethod']);
   }
-  balance(){
-    this.router.navigate(['/paymentMethod']);
+  balance() {
+    let accountNumber = window.localStorage.getItem("accountNumber");
+    this.get('payStation/balance/'+accountNumber);
+    
+    setTimeout(() => {
+      if (this.jsonResults != null || this.jsonResults != undefined) {
+        this.router.navigate(['/accBalance']);
+        this.accBalance = this.jsonResults[0].credit_amount;
+        window.localStorage.setItem("balance", this.accBalance);
+      }
+    }, 1000);
   }
-  sweetAlert(){
+  sweetAlert() {
     let global = this;
     swal({
       title: 'Are you sure?',
