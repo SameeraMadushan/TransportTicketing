@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
+import { Observable } from 'rxjs/Observable';
+//import { UserServiceService  } from '../services/user-service.service';
+import { Router } from '@angular/router';
+import {Http} from '@angular/http';
+
 
 @Component({
   selector: 'app-topup',
@@ -7,10 +12,50 @@ import swal from 'sweetalert2';
   styleUrls: ['./topup.component.css']
 })
 export class TopupComponent implements OnInit {
+  crediantials:any;
+  
+  session:any=window.localStorage.getItem("session");
+  
+  constructor(private router: Router,private http: Http ) { 
+    this.crediantials = [{
+      email:'chamindu123@my.com',
+      password:"newPassword"
+    }];
+    var data = this.userLogin(this.crediantials);
+    console.log(data);
+  }
+  
+  userLogin(cred): boolean{
+    //value: any;
+    var restData;
+    
+    // this.http.get ('http://192.168.52.11:4000/api/user').subscribe(data => {
+    //   // Read the result field from the JSON response.
+    //   console.log(data);
+    // });
 
-  constructor() { }
+
+    //let global = this;
+   var value = this.http.post(
+    'http://192.168.52.11:4000/api/user/login',
+    cred).subscribe(data => {
+      //return data.json().success;
+      console.log(data.json().success+"awa");
+      restData = data.json().success;
+      console.log(restData+"jklfsj");
+    })
+   
+    return  (restData);
+    
+  }
+
 
   ngOnInit() {
+    window.localStorage.removeItem("session");
+    if(this.session != null ){
+      this.router.navigate(['/selectTransaction']);
+    }
+    
   }
   card = '';
   loggedIn = true;
@@ -22,6 +67,7 @@ export class TopupComponent implements OnInit {
   creditByCard = false;
 
   topupLogin() {
+    
     swal.setDefaults({
       input: 'password',
       confirmButtonText: 'Submit',
@@ -34,53 +80,37 @@ export class TopupComponent implements OnInit {
     let global = this;
     swal.queue(steps).then(function (result) {
       swal.resetDefaults()
-      if (result.value == '123') {
-        swal({
-          title: 'Successfully Logged in!',
-          type: 'success',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        global.password = result.value;
-      }
-      else if (result.value != '123' && result.value != undefined) {
-        swal({
-          title: 'Invalid Login Details! Try again!',
-          type: 'error',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
+      
+
+      // if (result.value == '123') {
+      //   swal({
+      //     title: 'Successfully Logged in!',
+      //     type: 'success',
+      //     showConfirmButton: false,
+      //     timer: 1500
+      //   })
+      //   global.password = result.value;
+      // }
+      // else if (result.value != '123' && result.value != undefined) {
+      //   swal({
+      //     title: 'Invalid Login Details! Try again!',
+      //     type: 'error',
+      //     showConfirmButton: false,
+      //     timer: 1500
+      //   })
+      // }
     }).then(function () {
       if (global.password == '123') {
-        global.loggedIn = false;
-        global.loggedIn2 = true;
+        this.crediantials = [{
+          email:this.card,
+          password:global.password
+        }];
+        global.router.navigate(['/selectTransaction']);
+        window.localStorage.setItem("session",global.password);
+        window.localStorage.setItem("continue","login");
+        this.userLogin(this.crediantials);
+
       }
     });
-  }
-
-  addCredits() {
-    this.loggedIn2 = false;
-    this.addCredit = true;
-    this.checkBalance = false;
-
-  }
-
-  chkBalance() {
-    this.loggedIn2 = true;
-    this.checkBalance = true;
-    this.addCredit = false;
-  }
-
-  addCreditsbyCash() {
-    this.loggedIn2 = false;
-    this.creditByCash = true;
-    this.creditByCard = false;
-  }
-
-  addCreditsbyCard() {
-    this.loggedIn2 = false;
-    this.creditByCard = true;
-    this.creditByCash = false;
   }
 }
