@@ -11,22 +11,24 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TopupComponent } from './pages/topup/topup.component';
 import { NavigationComponent } from './shared/navigation/navigation.component';
 
-import { HomeModule } from './pages/dashboardcontent';
 import { SelectTransactionComponent } from './pages/topup/select-transaction/select-transaction.component';
 import { PaymentMethodsComponent } from './pages/topup/payment-methods/payment-methods.component';
 import { AddCreditByCardComponent } from './pages/topup/add-credit-by-card/add-credit-by-card.component';
 import { AddCreditByCashComponent } from './pages/topup/add-credit-by-cash/add-credit-by-cash.component';
+import { PassengersComponent } from './pages/dashboardcontent/passengers/passengers.component';
+import { StaffComponent } from './pages/dashboardcontent/staff/staff.component';
+import { BussesComponent } from './pages/dashboardcontent/busses/busses.component';
+import { StatisticsComponent } from './pages/dashboardcontent/statistics/statistics.component';
 
 const appRoutes: Routes = [
   { path: 'swapcard', component: SwapcardComponent },
   { path: 'topup', component: TopupComponent },
   { path: 'dashboard', component: DashboardComponent,
   children: [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    {
-      path: 'home',
-      loadChildren: './pages/dashboardcontent/home/home.module#HomeModule'
-    }
+    {path:'passenger', component:PassengersComponent},
+    {path:'staff', component:StaffComponent},
+    {path:'busses', component:BussesComponent},
+    {path:'staticstics', component:StatisticsComponent}
   ]
   },
   { path: 'selectTransaction', component: SelectTransactionComponent },
@@ -46,7 +48,11 @@ const appRoutes: Routes = [
     SelectTransactionComponent,
     PaymentMethodsComponent,
     AddCreditByCardComponent,
-    AddCreditByCashComponent
+    AddCreditByCashComponent,
+    PassengersComponent,
+    StaffComponent,
+    BussesComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,

@@ -19,36 +19,31 @@ export class TopupComponent implements OnInit {
   constructor(private router: Router,private http: Http ) { 
     this.crediantials = [{
       email:'chamindu123@my.com',
-      password:"newPassword"
+      password:'newPassword'
     }];
     var data = this.userLogin(this.crediantials);
     console.log(data);
   }
   
   userLogin(cred): boolean{
-    //value: any;
     var restData;
     
-    // this.http.get ('http://192.168.52.11:4000/api/user').subscribe(data => {
-    //   // Read the result field from the JSON response.
-    //   console.log(data);
-    // });
+    this.http.get ('http://192.168.1.100:4000/api/user').subscribe(data => {
+      // Read the result field from the JSON response.
+      console.log(data);
+    });
 
 
     //let global = this;
    var value = this.http.post(
-    'http://192.168.52.11:4000/api/user/login',
-    cred).subscribe(data => {
+    'http://192.168.1.100:4000/api/user/login',
+    this.crediantials).subscribe(data => {
       //return data.json().success;
-      console.log(data.json().success+"awa");
       restData = data.json().success;
-      console.log(restData+"jklfsj");
+      console.log(restData);
     })
-   
-    return  (restData);
-    
+    return  (restData);    
   }
-
 
   ngOnInit() {
     window.localStorage.removeItem("session");
@@ -82,33 +77,33 @@ export class TopupComponent implements OnInit {
       swal.resetDefaults()
       
 
-      // if (result.value == '123') {
-      //   swal({
-      //     title: 'Successfully Logged in!',
-      //     type: 'success',
-      //     showConfirmButton: false,
-      //     timer: 1500
-      //   })
-      //   global.password = result.value;
-      // }
-      // else if (result.value != '123' && result.value != undefined) {
-      //   swal({
-      //     title: 'Invalid Login Details! Try again!',
-      //     type: 'error',
-      //     showConfirmButton: false,
-      //     timer: 1500
-      //   })
-      // }
+      if (result.value == '123') {
+        swal({
+          title: 'Successfully Logged in!',
+          type: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        global.password = result.value;
+      }
+      else if (result.value != '123' && result.value != undefined) {
+        swal({
+          title: 'Invalid Login Details! Try again!',
+          type: 'error',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     }).then(function () {
       if (global.password == '123') {
-        this.crediantials = [{
-          email:this.card,
+        global.crediantials = [{
+          email:global.card,
           password:global.password
         }];
         global.router.navigate(['/selectTransaction']);
         window.localStorage.setItem("session",global.password);
         window.localStorage.setItem("continue","login");
-        this.userLogin(this.crediantials);
+        global.userLogin(global.crediantials);
 
       }
     });
