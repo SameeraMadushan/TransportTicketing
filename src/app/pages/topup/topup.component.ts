@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import swal from 'sweetalert2';
 import { Observable } from 'rxjs/Observable';
-//import { UserServiceService  } from '../services/user-service.service';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { get } from 'selenium-webdriver/http';

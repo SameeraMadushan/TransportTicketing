@@ -1,4 +1,4 @@
-<!-- Add credit by card-->
+Add credit by card
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -24,7 +24,7 @@
                   <div class="controls">
                     <div class="row">
                       <div class="col-md-3">
-                        <input type="number" class="form-control" autocomplete="off" required="true">
+                        <input type="number" class="form-control" autocomplete="off" required [(ngModel)]="amount" >
                       </div>
                       <div class="col-md-8"></div>
                     </div>
@@ -34,7 +34,7 @@
                 <div class="control-group">
                   <label class="control-label">Card Holder's Name</label>
                   <div class="controls">
-                    <input type="text" class="form-control" pattern="\w+ \w+.*" title="First and last name" required="true">
+                    <input type="text" class="form-control" pattern="\w+ \w+.*" title="First and last name" required [(ngModel)]="name">
                   </div>
                 </div>
                 <div class="control-group">
@@ -42,16 +42,16 @@
                   <div class="controls">
                     <div class="row">
                       <div class="col-md-3">
-                        <input type="text" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="First four digits" required="true">
+                        <input type="number" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="First four digits" required [(ngModel)]="card1">
                       </div>
                       <div class="col-md-3">
-                        <input type="text" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="Second four digits" required="true">
+                        <input type="number" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="Second four digits" required [(ngModel)]="card2">
                       </div>
                       <div class="col-md-3">
-                        <input type="text" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="Third four digits" required="true">
+                        <input type="number" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="Third four digits" required [(ngModel)]="card3">
                       </div>
                       <div class="col-md-3">
-                        <input type="text" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="Fourth four digits" required="true">
+                        <input type="number" class="form-control" autocomplete="off" maxlength="4" pattern="\d{4}" title="Fourth four digits" required [(ngModel)]="card4">
                       </div>
                     </div>
                   </div>
@@ -98,7 +98,7 @@
                     <div class="row">
                       <div class="col-md-3">
                         <input type="text" class="form-control" autocomplete="off" maxlength="3" pattern="\d{3}" title="Three digits at back of your card"
-                          required="">
+                          required [(ngModel)]="cvv">
                       </div>
                       <div class="col-md-8"></div>
                     </div>
@@ -107,7 +107,7 @@
                 <div class="control-group">
                   <label class="control-label"></label>
                   <div class="controls">
-                    <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+                    <button type="submit" class="btn btn-primary" (click)="updateAmount(amount)">Submit</button>
                     <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
                   </div>
                 </div>
