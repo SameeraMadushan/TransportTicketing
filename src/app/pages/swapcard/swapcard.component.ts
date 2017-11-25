@@ -82,6 +82,7 @@ export class SwapcardComponent implements OnInit {
       //get token details from server
       this.get('payStation/getToken/' + this.card);
       setTimeout(() => {
+        //invalid card tapped message
         if (this.jsonResults == null || this.jsonResults == undefined ||
           this.jsonResults.success == false) {
           swal({
@@ -99,27 +100,27 @@ export class SwapcardComponent implements OnInit {
             route_no: "R1",
             start_point: "Kesbewa"
           }];
+          //store route number for later use
           window.localStorage.setItem("routeNo", this.location[0].route_no);
           let pid = this.jsonResults.pid;
           this.jsonResults = null;
           this.get('journey/isAvailable/' + pid);
-          
+          //check for journey availability
           setTimeout(() => {
-            
             if (this.jsonResults.isJourneyAvailable == false) {
               this.jsonResults = null;
+              //check whether credits available or not for a journey
               this.post('account/validateCredit/' + window.localStorage.getItem("accountNumber"), this.location);
               setTimeout(() => {
                 let journey = [{
                   pid: window.localStorage.getItem("pid"),
                   start_point: this.location[0].start_point
                 }];
-                // console.log(this.jsonResults)
+                // if credits available open the door and start the journey
                 if (this.jsonResults.success == true && this.jsonResults.creditStatus == true) {
                   this.jsonResults = null;
                   this.post('journey', journey);
                   setTimeout(() => {
-                    // console.log(this.jsonResults)
                     if (this.jsonResults.success == true) {
                       swal({
                         position: 'center',
@@ -139,7 +140,7 @@ export class SwapcardComponent implements OnInit {
                     }
                   }, 1000);
                 }
-                else {
+                else {  ///passenger don't have enough credits to travel
                   swal({
                     title: "Oops! You don't have enough credits to travel!",
                     type: 'error',
@@ -151,6 +152,7 @@ export class SwapcardComponent implements OnInit {
             }
             else {
               this.jsonResults = null;
+              // check if the passenger in the bus or not. if passenger is in the bus, 
               this.get('journey/' + window.localStorage.getItem("pid"));
               setTimeout(() => {
                 
@@ -163,6 +165,7 @@ export class SwapcardComponent implements OnInit {
                     route_no: window.localStorage.getItem("routeNo")
                   }];
                   this.jsonResults = null;
+                  //set end point to database and calculate fare of the journey
                   this.post('getFare', this.journey);
                   setTimeout(() => {
                     
@@ -172,10 +175,12 @@ export class SwapcardComponent implements OnInit {
                         amount: this.jsonResults.amount,
                         jid: window.localStorage.getItem("journeyId")
                       }];
-                      
+
+                      //deduct calculated fine from passenger's account
                       this.put('account/deductCredit/', window.localStorage.getItem("accountNumber"), payment)
                       setTimeout(() => {
                         
+                        //sign out passenger from the bus journey
                         this.put('journey/', window.localStorage.getItem("pid"), this.journey);
                         if(this.jsonResults != null || this.jsonResults != undefined){
                           swal({
@@ -197,5 +202,4 @@ export class SwapcardComponent implements OnInit {
       }, 600);
     }
   }
-
 }
