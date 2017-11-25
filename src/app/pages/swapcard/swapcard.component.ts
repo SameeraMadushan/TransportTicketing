@@ -39,9 +39,8 @@ export class SwapcardComponent implements OnInit {
       })
   }
 
-  put(method, accNumber, amount) {
-    this.http.put(this.baseUrl + method + accNumber,
-      [{ amount: amount }])
+  put(method, accNumber, object) {
+    this.http.put(this.baseUrl + method + accNumber,object)
       .subscribe(response => {
         // console.log(response.json());
         this.jsonResults = response.json();
@@ -104,7 +103,9 @@ export class SwapcardComponent implements OnInit {
           let pid = this.jsonResults.pid;
           this.jsonResults = null;
           this.get('journey/isAvailable/' + pid);
+          
           setTimeout(() => {
+            
             if (this.jsonResults.isJourneyAvailable == false) {
               this.jsonResults = null;
               this.post('account/validateCredit/' + window.localStorage.getItem("accountNumber"), this.location);
@@ -152,6 +153,7 @@ export class SwapcardComponent implements OnInit {
               this.jsonResults = null;
               this.get('journey/' + window.localStorage.getItem("pid"));
               setTimeout(() => {
+                
                 if (this.jsonResults.start_point != null) {
                   window.localStorage.setItem("startPoint", this.jsonResults.start_point);
                   window.localStorage.setItem("journeyId", this.jsonResults.jid);
@@ -162,17 +164,18 @@ export class SwapcardComponent implements OnInit {
                   }];
                   this.jsonResults = null;
                   this.post('getFare', this.journey);
-                  console.log(this.jsonResults)
                   setTimeout(() => {
+                    
                     if (this.jsonResults != null || this.jsonResults != undefined) {
                       let payment = [{
                         payment_type: "Card",
                         amount: this.jsonResults.amount,
                         jid: window.localStorage.getItem("journeyId")
-                      }]
+                      }];
                       
-                      this.put('account/deductCredit/', window.localStorage.getItem("accountNumber"), this.jsonResults.amount)
+                      this.put('account/deductCredit/', window.localStorage.getItem("accountNumber"), payment)
                       setTimeout(() => {
+                        
                         this.put('journey/', window.localStorage.getItem("pid"), this.journey);
                         if(this.jsonResults != null || this.jsonResults != undefined){
                           swal({
