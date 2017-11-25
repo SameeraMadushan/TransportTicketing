@@ -20,17 +20,15 @@ export class AddCreditByCashComponent implements OnInit {
     this.router.navigate(['/paymentMethod']);
   }
 
-  baseUrl = 'http://192.168.1.100:4000/api/';
+  baseUrl = 'http://localhost:4000/api/';
   jsonResults: any;
   accountNumber = window.localStorage.getItem("accountNumber");
   amount: number;
 
   put(method, accNumber, amount) {
-    console.log(this.amount);
     this.http.put(this.baseUrl + method + accNumber,
       [{ amount: this.amount }])
       .subscribe(response => {
-        console.log(response.json());
         this.jsonResults = response.json();
       })
   }
@@ -47,7 +45,6 @@ export class AddCreditByCashComponent implements OnInit {
       this.put('payStation/addCredit/', this.accountNumber, amount);
 
       setTimeout(() => {
-        console.log(this.jsonResults);
         if (this.jsonResults != null || this.jsonResults != undefined) {
           swal({
             title: 'Successfully Deposited!',

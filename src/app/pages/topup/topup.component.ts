@@ -25,7 +25,7 @@ export class TopupComponent implements OnInit {
     }
 
   }
-  baseUrl = 'http://192.168.1.100:4000/api/';
+  baseUrl = 'http://localhost:4000/api/';
   card = '';
   loggedIn = true;
   loggedIn2 = false;

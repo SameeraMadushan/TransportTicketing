@@ -17,7 +17,7 @@ export class SwapcardComponent implements OnInit {
   ngOnInit() {
   }
   card: any;
-  baseUrl = 'http://192.168.1.100:4000/api/';
+  baseUrl = 'http://127.0.0.1:4000/api/';
   jsonResults: any
   password: any;
   location: any;

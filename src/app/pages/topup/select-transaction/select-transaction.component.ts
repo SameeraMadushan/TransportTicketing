@@ -21,7 +21,7 @@ export class SelectTransactionComponent implements OnInit {
       this.router.navigate(['/topup']);
     }
   }
-  baseUrl = 'http://192.168.1.100:4000/api/';
+  baseUrl = 'http://localhost:4000/api/';
   jsonResults: any;
   accBalance = '';
 
