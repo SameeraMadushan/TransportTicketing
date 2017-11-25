@@ -47,30 +47,8 @@ export class SwapcardComponent implements OnInit {
       })
   }
 
-  // onClick() {
-  //   if (this.card != null || this.card != undefined) {
-  //     swal({
-  //       position: 'center',
-  //       type: 'success',
-  //       title: 'Have a Safe Journey! ' + this.card,
-  //       showConfirmButton: false,
-  //       timer: 2000
-  //     })
-  //   }
-  //   else{
-  //     swal({
-  //       title: 'Please tap your card or scan QR code!',
-  //       type: 'error',
-  //       showConfirmButton: false,
-  //       timer: 1500
-  //     })
-  //   }
-
-  // }
-  
-
   onClick() {
-    if (this.card.length < 1) {
+    if (this.card == null || this.card == undefined) {
       swal({
         title: 'Please tap your card or scan QR code!',
         type: 'error',
